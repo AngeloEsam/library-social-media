@@ -181,7 +181,13 @@ exports.googleAuth = async (req, res, next) => {
     if (!error && response.statusCode == 200) {
       const { email, name, picture } = JSON.parse(body);
       console.log(JSON.parse(body));
-      let user = await User.findOne({ email });
+      let user = await User.findOne({ email }).populate([
+        "favouriteBooks",
+        "savedPosts",
+        "posts",
+        "followers",
+        "following",
+      ]);
       if (!user) {
         user = await User.create({ email, name, photo: picture });
       }

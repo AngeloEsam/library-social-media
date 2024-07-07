@@ -1,5 +1,3 @@
-
-
 const express = require("express");
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/userRoutes");
@@ -14,20 +12,18 @@ const dotenv = require("dotenv").config();
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const Notification = require("./models/notificationModel");
-const notificationController =require('./controllers/notificationController')
+const notificationController = require("./controllers/notificationController");
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(
-  cors(
-    {
+  cors({
     credentials: true,
     origin: "http://localhost:5173",
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  }
-)
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  })
 );
 
 //socket io
@@ -38,7 +34,6 @@ const io = require("socket.io")(server, {
     methods: ["GET", "POST"],
   },
 });
-
 
 // Initialize socket in the notification controller
 notificationController.initializeSocket(io);
@@ -61,9 +56,6 @@ io.on("connection", (socket) => {
   });
 });
 
-
-
-
 // Endpoint to send notification (for testing)
 app.post("/send-notification", async (req, res) => {
   const { userId, message, details } = req.body;
@@ -71,7 +63,7 @@ app.post("/send-notification", async (req, res) => {
 
   try {
     await notification.save();
-    notificationController.createNotification(null, userId, 'info', message);
+    notificationController.createNotification(null, userId, "info", message);
     res.status(201).json(notification);
   } catch (error) {
     res.status(500).json({ message: "Failed to save notification" });
@@ -79,15 +71,13 @@ app.post("/send-notification", async (req, res) => {
 });
 
 mongoose
-  .connect(process.env.CONNECTION_DB, {
-
-  })
+  .connect(process.env.CONNECTION_DB, {})
   .then(() => console.log("Connected to DB 😃"))
   .catch((err) => console.error("Failed to connect to DB", err));
 
 app.use("/users", userRoutes);
 app.use("/posts", postRoute);
-app.use("/comments", commentRoute); 
+app.use("/comments", commentRoute);
 app.use("/books", bookRoutes);
 app.use("/ratings", ratingRoutes);
 app.use("/authors", authorRoutes);
@@ -96,6 +86,6 @@ app.use("/image", express.static("bookImage"));
 app.use("/userImages", express.static("userImages"));
 app.use("/postcard", express.static("postImages"));
 
-
-
-server.listen(process.env.PORT, () => console.log(`App listening on port ${process.env.PORT}!`));
+server.listen(process.env.PORT, () =>
+  console.log(`App listening on port ${process.env.PORT}!`)
+);
