@@ -178,3 +178,8 @@ Supports **users, posts, comments, books, ratings, authors, and notifications** 
 ```bash
 git clone https://github.com/AngeloEsam/library-social-media.git
 cd library-social-media
+--
+
+##  Run the Server
+npm install
+npm run dev
