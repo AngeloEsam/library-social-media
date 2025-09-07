@@ -176,5 +176,5 @@ Supports **users, posts, comments, books, ratings, authors, and notifications** 
 
 ### 📥 Clone repo
 ```bash
-git clone https://github.com/your-username/social-backend.git
-cd social-backend
+git clone https://github.com/AngeloEsam/library-social-media.git
+cd library-social-media
